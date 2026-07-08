@@ -4,8 +4,8 @@ import com.aristidevs.cursotestingandroid.core.builders.product
 import com.aristidevs.cursotestingandroid.core.builders.promotion
 import com.aristidevs.cursotestingandroid.productlist.domain.model.ProductPromotion
 import com.aristidevs.cursotestingandroid.productlist.domain.model.PromotionType
-import junit.framework.Assert.assertNull
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

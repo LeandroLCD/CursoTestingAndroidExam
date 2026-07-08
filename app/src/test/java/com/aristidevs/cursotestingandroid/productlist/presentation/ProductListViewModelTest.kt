@@ -12,9 +12,9 @@ import com.aristidevs.cursotestingandroid.productlist.domain.repository.ProductR
 import com.aristidevs.cursotestingandroid.productlist.domain.usecase.GetProductsUseCase
 import com.aristidevs.cursotestingandroid.productlist.domain.usecase.GetPromotionForProduct
 import com.aristidevs.cursotestingandroid.productlist.presentation.ProductListUiState.Success
-import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
