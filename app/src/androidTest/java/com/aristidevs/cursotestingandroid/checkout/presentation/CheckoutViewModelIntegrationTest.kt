@@ -6,16 +6,18 @@ import com.aristidevs.cursotestingandroid.cart.domain.repository.CartItemReposit
 import com.aristidevs.cursotestingandroid.cart.domain.usecase.GetCartSummaryUseCase
 import com.aristidevs.cursotestingandroid.checkout.domain.usecase.PlaceOrderUseCase
 import com.aristidevs.cursotestingandroid.core.MainDispatcherRule
-import com.aristidevs.cursotestingandroid.core.builders.OrderConfirmationBuilder
+import com.aristidevs.cursotestingandroid.core.mockwebserver.MiniMarketApiDispatcher
+import com.aristidevs.cursotestingandroid.core.mockwebserver.OrderErrorDispatcher
 import com.aristidevs.cursotestingandroid.core.mockwebserver.rules.MockWebServerRule
-import com.aristidevs.cursotestingandroid.core.mothers.ProductMother.coffee
+import com.aristidevs.cursotestingandroid.core.utils.asAsset
 import com.aristidevs.cursotestingandroid.core.utils.awaitStateMatching
+import com.aristidevs.cursotestingandroid.productlist.domain.repository.ProductRepository
+import com.aristidevs.cursotestingandroid.productlist.domain.repository.PromotionRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
-import okhttp3.mockwebserver.MockResponse
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -49,6 +51,12 @@ class CheckoutViewModelIntegrationTest {
     lateinit var cartRepository: CartItemRepository
 
     @Inject
+    lateinit var productRepository: ProductRepository
+
+    @Inject
+    lateinit var promotionRepository: PromotionRepository
+
+    @Inject
     lateinit var placeOrderUseCase: PlaceOrderUseCase
 
     @Inject
@@ -62,8 +70,14 @@ class CheckoutViewModelIntegrationTest {
     }
 
     @Before
-    fun setUp() {
+    fun setUp() = runTest {
+        mockWebServer.server.dispatcher = MiniMarketApiDispatcher(
+            productJson = "product_list_default.json".asAsset(),
+        )
         hilt.inject()
+        cartRepository.clearCart()
+        productRepository.refreshProduct()
+        promotionRepository.refreshPromotions()
     }
 
     /**
@@ -73,9 +87,13 @@ class CheckoutViewModelIntegrationTest {
     @Test
     fun givenItemsInCart_whenViewModelInitialized_thenIdleStateWithSummary() = runTest {
         // GIVEN
-        val product = coffee()
-        val quantity = 2
-        cartRepository.addToCart(product.id, quantity)
+        val productIdOne = "p1"
+        val productIdTwo = "p2"
+        val quantityOne = 2
+        val quantityTwo = 1
+        cartRepository.addToCart(productIdOne, quantityOne)
+        cartRepository.addToCart(productIdTwo, quantityTwo)
+        val expectedSubtotal = 10.0 * quantityOne + 20.0 * quantityTwo
 
         // WHEN
         viewModel.uiState.test {
@@ -83,7 +101,7 @@ class CheckoutViewModelIntegrationTest {
 
             // THEN
             assertNotNull(state)
-            assertNotEquals(state.summary.subtotal, product.price * quantity)
+            assertEquals(expectedSubtotal, state.summary.subtotal, 0.01)
         }
     }
 
@@ -95,14 +113,9 @@ class CheckoutViewModelIntegrationTest {
     @Test
     fun givenValidFormAndSuccessfulOrder_whenOnConfirm_thenSuccessStateAndCartCleared() = runTest {
         // GIVEN
-        val product = coffee()
+        val productId = "p1"
         val quantity = 2
-        cartRepository.addToCart(product.id, quantity)
-        mockWebServer.server.enqueue(
-            MockResponse().setResponseCode(200).setBody(
-                OrderConfirmationBuilder().buildJson(),
-            ),
-        )
+        cartRepository.addToCart(productId, quantity)
         viewModel.onNameChange("test name")
         viewModel.onEmailChange("test@mail.cl")
         viewModel.onAddressChange("test address")
@@ -129,12 +142,10 @@ class CheckoutViewModelIntegrationTest {
     @Test
     fun givenOrderEndpointFails_whenOnConfirm_thenErrorState() = runTest {
         // GIVEN
-        val product = coffee()
+        val productId = "p1"
         val quantity = 2
-        cartRepository.addToCart(product.id, quantity)
-        mockWebServer.server.enqueue(
-            MockResponse().setResponseCode(500),
-        )
+        cartRepository.addToCart(productId, quantity)
+        mockWebServer.server.dispatcher = OrderErrorDispatcher()
         viewModel.onNameChange("test name")
         viewModel.onEmailChange("test@mail.cl")
         viewModel.onAddressChange("test address")
