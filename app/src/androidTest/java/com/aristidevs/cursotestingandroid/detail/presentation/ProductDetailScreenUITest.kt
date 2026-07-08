@@ -6,7 +6,6 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.aristidevs.cursotestingandroid.core.builders.promotion
 import com.aristidevs.cursotestingandroid.core.mothers.ProductMother.coffee
 import com.aristidevs.cursotestingandroid.core.mothers.ProductMother.milk
 import com.aristidevs.cursotestingandroid.core.mothers.PromotionMother.buyXPayYDefault
@@ -15,7 +14,7 @@ import com.aristidevs.cursotestingandroid.core.presentation.testing.UiTestTag.PR
 import com.aristidevs.cursotestingandroid.core.presentation.testing.UiTestTag.PRODUCT_DETAIL_LOADING
 import com.aristidevs.cursotestingandroid.productlist.domain.model.ProductWithPromotion
 import org.junit.Rule
-import kotlin.test.Test
+import org.junit.Test
 
 class ProductDetailScreenUITest {
     @get:Rule

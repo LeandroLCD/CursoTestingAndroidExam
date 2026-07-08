@@ -9,6 +9,8 @@ import androidx.test.core.app.ApplicationProvider
 import com.aristidevs.cursotestingandroid.cart.data.local.database.dao.CartItemDao
 import com.aristidevs.cursotestingandroid.cart.data.repository.CartItemRepositoryImpl
 import com.aristidevs.cursotestingandroid.cart.domain.repository.CartItemRepository
+import com.aristidevs.cursotestingandroid.checkout.data.repository.OrderRepositoryImpl
+import com.aristidevs.cursotestingandroid.checkout.domain.repository.OrderRepository
 import com.aristidevs.cursotestingandroid.core.data.coroutines.DefaultDispatchersProvider
 import com.aristidevs.cursotestingandroid.core.data.local.database.MiniMarketDatabase
 import com.aristidevs.cursotestingandroid.core.data.util.SystemClock
@@ -76,6 +78,10 @@ object TestDataModule {
     @Provides
     @Singleton
     fun provideCartRepository(cartItemRepositoryImpl: CartItemRepositoryImpl): CartItemRepository = cartItemRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideOrderRepository(orderRepositoryImpl: OrderRepositoryImpl): OrderRepository = orderRepositoryImpl
 
     @Provides
     @Singleton
