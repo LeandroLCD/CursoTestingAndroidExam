@@ -1,8 +1,9 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ktlint)
@@ -13,15 +14,6 @@ android {
     namespace = "com.aristidevs.cursotestingandroid"
     compileSdk {
         version = release(36)
-    }
-
-    sourceSets {
-        getByName("test") {
-            java.directories.add("src/sharedTest/java")
-        }
-        getByName("androidTest") {
-            java.directories.add("src/sharedTest/java")
-        }
     }
 
     defaultConfig {
@@ -51,26 +43,31 @@ android {
         compose = true
         buildConfig = true
     }
-    kotlin {
-        jvmToolchain(17)
+
+    testFixtures {
+        enable = true
+        androidResources = true
     }
-    kover {
-        reports {
-            filters {
-                excludes {
-                    classes(
-                        "*.databinding.*",
-                        "*.BuildConfig",
-                        "*Activity*",
-                        "*Screen*",
-                        "*ComposableSingletons*",
-                    )
-                }
+}
+kotlin {
+    jvmToolchain(17)
+}
+kover {
+    reports {
+        filters {
+            excludes {
+                classes(
+                    "*.databinding.*",
+                    "*.BuildConfig",
+                    "*Activity*",
+                    "*Screen*",
+                    "*ComposableSingletons*",
+                )
             }
-            verify {
-                rule {
-                    minBound(20)
-                }
+        }
+        verify {
+            rule {
+                minBound(20)
             }
         }
     }
@@ -100,7 +97,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.lifecycle.viewmodel.compose)
-    implementation(libs.core.ktx)
     ksp(libs.hilt.compiler.ksp)
 
     // Room
@@ -146,4 +142,11 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Test Fixtures
+    testFixturesImplementation(platform(libs.androidx.compose.bom))
+    testFixturesImplementation(libs.androidx.compose.ui)
+    testFixturesImplementation(libs.androidx.compose.runtime)
+    testFixturesImplementation(libs.junit)
+    testFixturesImplementation(libs.kotlinx.coroutines.test)
 }
