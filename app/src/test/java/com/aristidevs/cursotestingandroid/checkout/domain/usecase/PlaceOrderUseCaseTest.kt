@@ -10,7 +10,6 @@ import org.junit.Test
  * Pista: necesitarás un fake de OrderRepository y FakeCartItemRepository.
  */
 class PlaceOrderUseCaseTest {
-
     @Test
     fun `given successful order when invoke then returns success and clears cart`() {
         // GIVEN

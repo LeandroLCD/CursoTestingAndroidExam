@@ -14,7 +14,6 @@ import org.junit.Test
  * y un fake de OrderRepository que tendrás que crear.
  */
 class CheckoutViewModelTest {
-
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
