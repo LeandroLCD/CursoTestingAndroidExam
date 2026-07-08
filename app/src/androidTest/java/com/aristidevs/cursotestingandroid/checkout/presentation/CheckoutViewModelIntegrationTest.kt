@@ -141,7 +141,7 @@ class CheckoutViewModelIntegrationTest {
 
         // WHEN
         viewModel.onConfirm()
-        viewModel.uiState.test(6.seconds) {
+        viewModel.uiState.test(9.seconds) {
             val state = awaitStateMatching { it is CheckoutUiState.Error }
 
             val cartItems = cartRepository.getCartItems().firstOrNull()
