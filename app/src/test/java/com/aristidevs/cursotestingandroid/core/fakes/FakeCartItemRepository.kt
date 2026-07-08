@@ -63,5 +63,7 @@ class FakeCartItemRepository : CartItemRepository {
         _cartItems.value = emptyList()
     }
 
-    override suspend fun getCartItemById(productId: String): CartItem? = _cartItems.value.find { it.productId == productId }
+    override suspend fun getCartItemById(productId: String): CartItem? {
+        return _cartItems.value.find { it.productId == productId }
+    }
 }

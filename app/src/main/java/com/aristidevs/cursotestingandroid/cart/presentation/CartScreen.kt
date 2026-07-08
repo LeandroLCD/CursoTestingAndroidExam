@@ -66,8 +66,8 @@ import java.util.Currency.getInstance
 @Composable
 fun CartScreen(
     onBack: () -> Unit,
-    navigateToCheckout:() -> Unit,
-    cartViewModel: CartViewModel = hiltViewModel()
+    navigateToCheckout: () -> Unit,
+    cartViewModel: CartViewModel = hiltViewModel(),
 ) {
     val uiState by cartViewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -98,7 +98,7 @@ fun CartScreen(
             )
         },
         onRemove = { id -> cartViewModel.removeFromCart(id) },
-        navigateToCheckout = navigateToCheckout
+        navigateToCheckout = navigateToCheckout,
     )
 }
 
@@ -111,7 +111,7 @@ fun CartContent(
     onIncreaseQuantity: (String, Int) -> Unit,
     onDecreaseQuantity: (String, Int) -> Unit,
     onRemove: (String) -> Unit,
-    navigateToCheckout:() -> Unit
+    navigateToCheckout: () -> Unit,
 ) {
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -146,7 +146,7 @@ fun CartContent(
                     onIncreaseQuantity = onIncreaseQuantity,
                     onDecreaseQuantity = onDecreaseQuantity,
                     onRemove = onRemove,
-                    navigateToCheckout = navigateToCheckout
+                    navigateToCheckout = navigateToCheckout,
                 )
             }
         }

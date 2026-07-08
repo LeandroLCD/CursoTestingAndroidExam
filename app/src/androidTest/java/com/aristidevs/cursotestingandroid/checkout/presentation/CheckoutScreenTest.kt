@@ -14,7 +14,6 @@ import org.junit.Test
  * localiza nodos por texto (la pantalla aún no expone testTags) y verifica habilitación del botón.
  */
 class CheckoutScreenTest {
-
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
 

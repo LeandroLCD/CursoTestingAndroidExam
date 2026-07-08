@@ -4,7 +4,14 @@ import com.aristidevs.cursotestingandroid.checkout.domain.model.OrderConfirmatio
 
 sealed interface Submission {
     data object Idle : Submission
+
     data object Submitting : Submission
-    data class Success(val confirmation: OrderConfirmation) : Submission
-    data class Failed(val message: String) : Submission
+
+    data class Success(
+        val confirmation: OrderConfirmation,
+    ) : Submission
+
+    data class Failed(
+        val message: String,
+    ) : Submission
 }

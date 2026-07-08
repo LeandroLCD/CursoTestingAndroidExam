@@ -5,18 +5,19 @@ import com.aristidevs.cursotestingandroid.checkout.domain.model.OrderConfirmatio
 import com.aristidevs.cursotestingandroid.checkout.domain.repository.OrderRepository
 import jakarta.inject.Inject
 
-class PlaceOrderUseCase @Inject constructor(
-    private val orderRepository: OrderRepository,
-    private val cartItemRepository: CartItemRepository
-) {
-
-    suspend operator fun invoke(): Result<OrderConfirmation> {
-        return try {
-            val confirmation = orderRepository.placeOrder()
-            cartItemRepository.clearCart()
-            Result.success(confirmation)
-        } catch (e: Exception) {
-            Result.failure(e)
+class PlaceOrderUseCase
+    @Inject
+    constructor(
+        private val orderRepository: OrderRepository,
+        private val cartItemRepository: CartItemRepository,
+    ) {
+        suspend operator fun invoke(): Result<OrderConfirmation> {
+            return try {
+                val confirmation = orderRepository.placeOrder()
+                cartItemRepository.clearCart()
+                Result.success(confirmation)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
         }
     }
-}

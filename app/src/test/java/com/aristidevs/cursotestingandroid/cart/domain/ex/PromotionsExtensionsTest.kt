@@ -2,8 +2,8 @@ package com.aristidevs.cursotestingandroid.cart.domain.ex
 
 import com.aristidevs.cursotestingandroid.core.builders.promotion
 import com.aristidevs.cursotestingandroid.productlist.domain.model.Promotion
-import org.junit.Test
 import org.junit.Assert.assertEquals
+import org.junit.Test
 import java.time.Instant
 
 class PromotionsExtensionsTest {
@@ -12,11 +12,10 @@ class PromotionsExtensionsTest {
     @Test
     fun givenFuturePromotion_whenActiveAt_thenExclude() {
         // Given
-        val futurePromotion =
-            promotion {
-                withStartTime(now.plusSeconds(10))
-                withEndTime(now.plusSeconds(100))
-            }
+        val futurePromotion = promotion {
+            withStartTime(now.plusSeconds(10))
+            withEndTime(now.plusSeconds(100))
+        }
         val promotions = listOf(futurePromotion)
 
         // When
@@ -29,11 +28,10 @@ class PromotionsExtensionsTest {
     @Test
     fun givenExpiredPromotion_whenActiveAt_thenExclude() {
         // Given
-        val expiredPromotion =
-            promotion {
-                withStartTime(now.minusSeconds(100))
-                withEndTime(now.minusSeconds(10))
-            }
+        val expiredPromotion = promotion {
+            withStartTime(now.minusSeconds(100))
+            withEndTime(now.minusSeconds(10))
+        }
         val promotions = listOf(expiredPromotion)
 
         // When
@@ -46,11 +44,10 @@ class PromotionsExtensionsTest {
     @Test
     fun givenOnGoingPromotion_whenActiveAt_thenInclude() {
         // Given
-        val activePromotion =
-            promotion {
-                withStartTime(now.minusSeconds(1))
-                withEndTime(now.plusSeconds(1))
-            }
+        val activePromotion = promotion {
+            withStartTime(now.minusSeconds(1))
+            withEndTime(now.plusSeconds(1))
+        }
         val promotions = listOf(activePromotion)
 
         // When
@@ -63,11 +60,10 @@ class PromotionsExtensionsTest {
     @Test
     fun givenExactStartTimePromotion_whenActiveAt_thenInclude() {
         // Given
-        val activePromotion =
-            promotion {
-                withStartTime(now)
-                withEndTime(now.plusSeconds(100))
-            }
+        val activePromotion = promotion {
+            withStartTime(now)
+            withEndTime(now.plusSeconds(100))
+        }
         val promotions = listOf(activePromotion)
 
         // When
@@ -80,11 +76,10 @@ class PromotionsExtensionsTest {
     @Test
     fun givenExactEndTimePromotion_whenActiveAt_thenInclude() {
         // Given
-        val activePromotion =
-            promotion {
-                withStartTime(now.minusSeconds(100))
-                withEndTime(now)
-            }
+        val activePromotion = promotion {
+            withStartTime(now.minusSeconds(100))
+            withEndTime(now)
+        }
         val promotions = listOf(activePromotion)
 
         // When

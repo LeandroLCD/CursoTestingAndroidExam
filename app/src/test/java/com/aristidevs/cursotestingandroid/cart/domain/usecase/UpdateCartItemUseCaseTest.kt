@@ -7,9 +7,9 @@ import com.aristidevs.cursotestingandroid.core.fakes.FakeCartItemRepository
 import com.aristidevs.cursotestingandroid.core.fakes.FakeProductRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Test
 
 class UpdateCartItemUseCaseTest {
     @Test

@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class OrderConfirmationResponse (
-    @SerialName("orderId")val orderId:String,
-    @SerialName("etaMinutes")val etaMinutes:Int,
-    @SerialName("total")val total:Double,
+class OrderConfirmationResponse(
+    @SerialName("orderId")val orderId: String,
+    @SerialName("etaMinutes")val etaMinutes: Int,
+    @SerialName("total")val total: Double,
 )

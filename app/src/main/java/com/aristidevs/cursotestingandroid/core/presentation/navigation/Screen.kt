@@ -20,5 +20,5 @@ sealed interface Screen : NavKey {
     ) : Screen
 
     @Serializable
-    data object Checkout: Screen
+    data object Checkout : Screen
 }

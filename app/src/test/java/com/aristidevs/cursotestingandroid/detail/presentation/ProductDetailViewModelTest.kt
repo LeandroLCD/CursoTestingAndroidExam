@@ -10,8 +10,9 @@ import com.aristidevs.cursotestingandroid.core.fakes.FakePromotionRepository
 import com.aristidevs.cursotestingandroid.core.fakes.FakeSystemClock
 import com.aristidevs.cursotestingandroid.detail.domain.usecase.GetProductDetailWithPromotionUseCase
 import com.aristidevs.cursotestingandroid.productlist.domain.usecase.GetPromotionForProduct
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 
@@ -24,44 +25,40 @@ class ProductDetailViewModelTest {
     private val fakePromotion = FakePromotionRepository()
     private val fakeClock: FakeSystemClock = FakeSystemClock()
 
-    private fun createViewModel() =
-        ProductDetailViewModel(
-            getProductDetailWithPromotionUseCase =
-                GetProductDetailWithPromotionUseCase(
-                    fakeProduct,
-                    fakePromotion,
-                    GetPromotionForProduct(),
-                    fakeClock,
-                ),
-            addToCartUseCase = AddToCartUseCase(fakeCart, fakeProduct),
-        )
+    private fun createViewModel() = ProductDetailViewModel(
+        getProductDetailWithPromotionUseCase = GetProductDetailWithPromotionUseCase(
+            fakeProduct,
+            fakePromotion,
+            GetPromotionForProduct(),
+            fakeClock,
+        ),
+        addToCartUseCase = AddToCartUseCase(fakeCart, fakeProduct),
+    )
 
     @Test
-    fun `given valid product id when load product then emits item`() =
-        runTest(mainDispatcherRule.scheduler) {
-            // GIVEN
-            val p =
-                product {
-                    withId("1")
-                    withName("erich")
-                }
-            fakeProduct.setProducts(listOf(p))
-            val viewModel = createViewModel()
-
-            viewModel.uiState.test {
-                awaitItem()
-
-                // when
-                viewModel.loadProduct("1")
-
-                // THEN
-                val finalState = awaitItem()
-
-                assertEquals("1", finalState.item?.product?.id)
-                assertEquals("erich", finalState.item?.product?.name)
-                cancelAndIgnoreRemainingEvents()
-            }
+    fun `given valid product id when load product then emits item`() = runTest(mainDispatcherRule.scheduler) {
+        // GIVEN
+        val p = product {
+            withId("1")
+            withName("erich")
         }
+        fakeProduct.setProducts(listOf(p))
+        val viewModel = createViewModel()
+
+        viewModel.uiState.test {
+            awaitItem()
+
+            // when
+            viewModel.loadProduct("1")
+
+            // THEN
+            val finalState = awaitItem()
+
+            assertEquals("1", finalState.item?.product?.id)
+            assertEquals("erich", finalState.item?.product?.name)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 
     @Test
     fun `given missing product id when load product then ends with item null`() =
@@ -85,11 +82,10 @@ class ProductDetailViewModelTest {
     @Test
     fun `given loaded product wgeb add to cart succeeds then emits success event`() =
         runTest(mainDispatcherRule.scheduler) {
-            val p =
-                product {
-                    withId("1")
-                    withStock(10)
-                }
+            val p = product {
+                withId("1")
+                withStock(10)
+            }
             fakeProduct.setProducts(listOf(p))
             val viewModel = createViewModel()
 
@@ -106,11 +102,10 @@ class ProductDetailViewModelTest {
     @Test
     fun `given loaded product without stock when add to cart then emits insufficient stock error`() =
         runTest(mainDispatcherRule.scheduler) {
-            val p =
-                product {
-                    withId("1")
-                    withStock(0)
-                }
+            val p = product {
+                withId("1")
+                withStock(0)
+            }
             fakeProduct.setProducts(listOf(p))
             val viewModel = createViewModel()
 

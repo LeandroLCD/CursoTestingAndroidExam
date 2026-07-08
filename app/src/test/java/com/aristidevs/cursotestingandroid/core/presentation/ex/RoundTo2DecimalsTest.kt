@@ -1,9 +1,9 @@
 package com.aristidevs.cursotestingandroid.core.presentation.ex
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class DoubleExTest {
+class RoundTo2DecimalsTest {
     @Test
     fun roundTo2Decimals_roundsCorrectly() {
         assertEquals(4.66, 4.6578.roundTo2Decimals(), 0.0)

@@ -46,7 +46,7 @@ class CartScreenTest {
                 onRemove = onRemove,
                 onDecreaseQuantity = onDecreaseQuantity,
                 onIncreaseQuantity = onIncreaseQuantity,
-                navigateToCheckout = navigateToCheckout
+                navigateToCheckout = navigateToCheckout,
             )
         }
     }

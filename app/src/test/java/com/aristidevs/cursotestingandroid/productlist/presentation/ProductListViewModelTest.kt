@@ -12,8 +12,9 @@ import com.aristidevs.cursotestingandroid.productlist.domain.repository.ProductR
 import com.aristidevs.cursotestingandroid.productlist.domain.usecase.GetProductsUseCase
 import com.aristidevs.cursotestingandroid.productlist.domain.usecase.GetPromotionForProduct
 import com.aristidevs.cursotestingandroid.productlist.presentation.ProductListUiState.Success
+import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
@@ -27,14 +28,13 @@ class ProductListViewModelTest {
         fakePromotion: FakePromotionRepository = FakePromotionRepository(),
         fakeClock: FakeSystemClock = FakeSystemClock(),
     ): ProductListViewModel {
-        val getProductUseCase =
-            GetProductsUseCase(
-                fakeProduct,
-                fakePromotion,
-                GetPromotionForProduct(),
-                fakeSettings,
-                fakeClock,
-            )
+        val getProductUseCase = GetProductsUseCase(
+            fakeProduct,
+            fakePromotion,
+            GetPromotionForProduct(),
+            fakeSettings,
+            fakeClock,
+        )
         return ProductListViewModel(
             getProductsUseCase = getProductUseCase,
             settingsRepository = fakeSettings,
@@ -42,71 +42,65 @@ class ProductListViewModelTest {
     }
 
     @Test
-    fun `given products when initialized then emits success state`() =
-        runTest(mainDispatcherRule.scheduler) {
-            // GIVEN
-            val productId = "id1"
-            val p1 = product { withId(productId) }
-            val fakeProduct = FakeProductRepository().apply { setProducts(listOf(p1)) }
+    fun `given products when initialized then emits success state`() = runTest(mainDispatcherRule.scheduler) {
+        // GIVEN
+        val productId = "id1"
+        val p1 = product { withId(productId) }
+        val fakeProduct = FakeProductRepository().apply { setProducts(listOf(p1)) }
 
-            // When
-            val viewModel = createViewModel(fakeProduct = fakeProduct)
+        // When
+        val viewModel = createViewModel(fakeProduct = fakeProduct)
 
-            // THEN
-            viewModel.uiState.test {
-                val state = awaitItem()
-                assertTrue(state is Success) // ERROR
-                assertEquals(1, (state as Success).products.size)
+        // THEN
+        viewModel.uiState.test {
+            val state = awaitItem()
+            assertTrue(state is Success) // ERROR
+            assertEquals(1, (state as Success).products.size)
 
-                cancelAndIgnoreRemainingEvents()
-            }
+            cancelAndIgnoreRemainingEvents()
         }
+    }
 
     @Test
-    fun `given selected category when set category then filters products`() =
-        runTest(mainDispatcherRule.scheduler) {
-            val p1 =
-                product {
-                    withId("1")
-                    withCategory("carne")
-                }
-            val p2 =
-                product {
-                    withId("2")
-                    withCategory("pasta")
-                }
-            val fakeProduct = FakeProductRepository().apply { setProducts(listOf(p1, p2)) }
-
-            val viewModel = createViewModel(fakeProduct = fakeProduct)
-
-            viewModel.uiState.test {
-                awaitItem()
-
-                viewModel.setCategory("pasta")
-
-                val state = awaitItem()
-
-                assertTrue(state is Success)
-                assertEquals(1, (state as Success).products.size)
-                assertEquals("pasta", (state).selectedCategory)
-
-                cancelAndIgnoreRemainingEvents()
-            }
+    fun `given selected category when set category then filters products`() = runTest(mainDispatcherRule.scheduler) {
+        val p1 = product {
+            withId("1")
+            withCategory("carne")
         }
+        val p2 = product {
+            withId("2")
+            withCategory("pasta")
+        }
+        val fakeProduct = FakeProductRepository().apply { setProducts(listOf(p1, p2)) }
+
+        val viewModel = createViewModel(fakeProduct = fakeProduct)
+
+        viewModel.uiState.test {
+            awaitItem()
+
+            viewModel.setCategory("pasta")
+
+            val state = awaitItem()
+
+            assertTrue(state is Success)
+            assertEquals(1, (state as Success).products.size)
+            assertEquals("pasta", (state).selectedCategory)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 
     @Test
     fun `given price asc sort option when set sort option then sorts by effective price`() =
         runTest(mainDispatcherRule.scheduler) {
-            val p1 =
-                product {
-                    withId("1")
-                    withPrice(30.0)
-                }
-            val p2 =
-                product {
-                    withId("2")
-                    withPrice(15.0)
-                }
+            val p1 = product {
+                withId("1")
+                withPrice(30.0)
+            }
+            val p2 = product {
+                withId("2")
+                withPrice(15.0)
+            }
             val fakeProduct = FakeProductRepository().apply { setProducts(listOf(p1, p2)) }
 
             val viewModel = createViewModel(fakeProduct = fakeProduct)
