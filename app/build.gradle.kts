@@ -149,4 +149,5 @@ dependencies {
     testFixturesImplementation(libs.androidx.compose.runtime)
     testFixturesImplementation(libs.junit)
     testFixturesImplementation(libs.kotlinx.coroutines.test)
+    testFixturesImplementation(libs.kotlinx.serialization.json)
 }

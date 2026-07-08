@@ -6,19 +6,24 @@ import com.aristidevs.cursotestingandroid.cart.domain.repository.CartItemReposit
 import com.aristidevs.cursotestingandroid.cart.domain.usecase.GetCartSummaryUseCase
 import com.aristidevs.cursotestingandroid.checkout.domain.usecase.PlaceOrderUseCase
 import com.aristidevs.cursotestingandroid.core.MainDispatcherRule
+import com.aristidevs.cursotestingandroid.core.builders.OrderConfirmationBuilder
 import com.aristidevs.cursotestingandroid.core.mockwebserver.rules.MockWebServerRule
 import com.aristidevs.cursotestingandroid.core.mothers.ProductMother.coffee
 import com.aristidevs.cursotestingandroid.core.utils.awaitStateMatching
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
+import okhttp3.mockwebserver.MockResponse
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
-import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * EXAMEN — Tests de INTEGRACIÓN del ViewModel de checkout (extremo a extremo).
@@ -74,11 +79,11 @@ class CheckoutViewModelIntegrationTest {
 
         // WHEN
         viewModel.uiState.test {
-            val item = awaitStateMatching { it is CheckoutUiState.Idle } as? CheckoutUiState.Idle
+            val state = awaitStateMatching { it is CheckoutUiState.Idle } as? CheckoutUiState.Idle
 
             // THEN
-            assertNotNull(item)
-            assertNotEquals(item.summary.subtotal, product.price * quantity)
+            assertNotNull(state)
+            assertNotEquals(state.summary.subtotal, product.price * quantity)
         }
     }
 
@@ -88,12 +93,32 @@ class CheckoutViewModelIntegrationTest {
      * terminal debe ser Success y el carrito real (Room) debe quedar vacío.
      */
     @Test
-    fun givenValidFormAndSuccessfulOrder_whenOnConfirm_thenSuccessStateAndCartCleared() {
+    fun givenValidFormAndSuccessfulOrder_whenOnConfirm_thenSuccessStateAndCartCleared() = runTest {
         // GIVEN
+        val product = coffee()
+        val quantity = 2
+        cartRepository.addToCart(product.id, quantity)
+        mockWebServer.server.enqueue(
+            MockResponse().setResponseCode(200).setBody(
+                OrderConfirmationBuilder().buildJson()
+            )
+        )
+        viewModel.onNameChange("test name")
+        viewModel.onEmailChange("test@mail.cl")
+        viewModel.onAddressChange("test address")
 
         // WHEN
+        viewModel.onConfirm()
+        viewModel.uiState.test(6.seconds) {
+            val state = awaitStateMatching { it is CheckoutUiState.Success } as? CheckoutUiState.Success
 
-        // THEN
+            val cartItems = cartRepository.getCartItems().firstOrNull()
+
+            // THEN
+            assertNotNull(state)
+            assertNotNull(cartItems)
+            assertTrue(cartItems.isEmpty())
+        }
     }
 
     /**
@@ -102,11 +127,29 @@ class CheckoutViewModelIntegrationTest {
      * Error y el carrito NO debe vaciarse.
      */
     @Test
-    fun givenOrderEndpointFails_whenOnConfirm_thenErrorState() {
+    fun givenOrderEndpointFails_whenOnConfirm_thenErrorState() = runTest {
         // GIVEN
+        val product = coffee()
+        val quantity = 2
+        cartRepository.addToCart(product.id, quantity)
+        mockWebServer.server.enqueue(
+            MockResponse().setResponseCode(500)
+        )
+        viewModel.onNameChange("test name")
+        viewModel.onEmailChange("test@mail.cl")
+        viewModel.onAddressChange("test address")
 
         // WHEN
+        viewModel.onConfirm()
+        viewModel.uiState.test(6.seconds) {
+            val state = awaitStateMatching { it is CheckoutUiState.Error }
 
-        // THEN
+            val cartItems = cartRepository.getCartItems().firstOrNull()
+
+            // THEN
+            assertTrue(state is CheckoutUiState.Error)
+            assertNotNull(cartItems)
+            assertTrue(cartItems.isNotEmpty())
+        }
     }
 }
