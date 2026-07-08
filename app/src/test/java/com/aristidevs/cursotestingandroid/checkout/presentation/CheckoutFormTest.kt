@@ -9,7 +9,6 @@ import org.junit.Test
  * SUT: [CheckoutForm.validate], [CheckoutFormErrors.isValid], [FieldError].
  */
 class CheckoutFormTest {
-
     @Test
     fun `given blank name when validate then nameError is REQUIRED`() {
         // GIVEN
