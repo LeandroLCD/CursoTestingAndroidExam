@@ -1,0 +1,12 @@
+{
+  "promotions": [
+    {
+      "id": "promo1",
+      "productId": "p1",
+      "type": "PERCENT",
+      "percent": 10,
+      "startAtEpoch": 1900000000,
+      "endAtEpoch": 2000000000
+    }
+  ]
+}

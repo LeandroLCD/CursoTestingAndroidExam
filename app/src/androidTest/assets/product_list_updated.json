@@ -1,0 +1,11 @@
+{
+  "products": [
+    {
+      "id": "updated-p1",
+      "name": "Pan integral",
+      "priceCents": 450,
+      "category": "Comida",
+      "stock": 10
+    }
+  ]
+}

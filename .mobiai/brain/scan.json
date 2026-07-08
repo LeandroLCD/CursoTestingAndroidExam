@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "project_name": "CursoTestingAndroid",
+  "project_type": "android",
+  "platforms": [
+    "android"
+  ],
+  "build_systems": [
+    "gradle"
+  ],
+  "ui": [
+    "coil",
+    "compose"
+  ],
+  "di": [
+    "hilt"
+  ],
+  "network": [
+    "okhttp",
+    "retrofit"
+  ],
+  "persistence": [
+    "datastore",
+    "room"
+  ],
+  "serialization": [
+    "kotlinx.serialization"
+  ],
+  "testing": [
+    "espresso",
+    "mockk",
+    "turbine"
+  ],
+  "integrations": [],
+  "ci_cd": [],
+  "detected_files": {
+    "android_manifest": "app/src/main/AndroidManifest.xml",
+    "settings_gradle": "settings.gradle.kts"
+  },
+  "warnings": [],
+  "created_at": "2026-05-26T14:59:40Z",
+  "updated_at": "2026-05-26T14:59:40Z"
+}

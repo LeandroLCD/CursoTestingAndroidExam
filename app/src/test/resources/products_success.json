@@ -1,0 +1,324 @@
+{
+  "products": [
+    {
+      "id": "p1",
+      "name": "Leche Entera 1L",
+      "category": "Dairy",
+      "priceCents": 120,
+      "stock": 0,
+      "imageUrl": "https://images.unsplash.com/photo-1580910051074-3eb694886505"
+    },
+    {
+      "id": "p2",
+      "name": "Huevos Camperos (12u)",
+      "category": "Dairy",
+      "priceCents": 310,
+      "stock": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1587486913049-53fc88980cfc"
+    },
+    {
+      "id": "p3",
+      "name": "Pan Integral",
+      "category": "Bakery",
+      "priceCents": 180,
+      "stock": 0,
+      "imageUrl": "https://images.unsplash.com/photo-1509440159596-0249088772ff"
+    },
+    {
+      "id": "p4",
+      "name": "Manzanas Golden (1kg)",
+      "category": "Fruits",
+      "priceCents": 250,
+      "stock": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce"
+    },
+    {
+      "id": "p5",
+      "name": "Pechuga de Pollo (500g)",
+      "category": "Meat",
+      "priceCents": 525,
+      "stock": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1604503468506-a8da13d82791"
+    },
+    {
+      "id": "p6",
+      "name": "Pasta Espagueti",
+      "category": "Pantry",
+      "priceCents": 95,
+      "stock": 0,
+      "imageUrl": "https://images.unsplash.com/photo-1589307004391-0f9c3a1e1b89"
+    },
+    {
+      "id": "p7",
+      "name": "Tomate Frito",
+      "category": "Pantry",
+      "priceCents": 140,
+      "stock": 30,
+      "imageUrl": "https://images.unsplash.com/photo-1598514982901-7f9b2f8c5c9c"
+    },
+    {
+      "id": "p8",
+      "name": "Chocolate Negro 85%",
+      "category": "Snacks",
+      "priceCents": 210,
+      "stock": 3,
+      "imageUrl": "https://images.unsplash.com/photo-1582176604856-e824b4736522"
+    },
+    {
+      "id": "p9",
+      "name": "Arroz Basmati 1kg",
+      "category": "Pantry",
+      "priceCents": 220,
+      "stock": 40,
+      "imageUrl": "https://images.unsplash.com/photo-1586201375761-83865001e31c"
+    },
+    {
+      "id": "p10",
+      "name": "Atún en Lata",
+      "category": "Pantry",
+      "priceCents": 130,
+      "stock": 60,
+      "imageUrl": "https://images.unsplash.com/photo-1590080877777-95b9f3f1f6b4"
+    },
+    {
+      "id": "p11",
+      "name": "Yogur Griego Natural",
+      "category": "Dairy",
+      "priceCents": 190,
+      "stock": 22,
+      "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777"
+    },
+    {
+      "id": "p12",
+      "name": "Queso Curado",
+      "category": "Dairy",
+      "priceCents": 450,
+      "stock": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d"
+    },
+    {
+      "id": "p13",
+      "name": "Plátanos (1kg)",
+      "category": "Fruits",
+      "priceCents": 180,
+      "stock": 25,
+      "imageUrl": "https://images.unsplash.com/photo-1574226516831-e1dff420e8f8"
+    },
+    {
+      "id": "p14",
+      "name": "Naranjas (1kg)",
+      "category": "Fruits",
+      "priceCents": 210,
+      "stock": 18,
+      "imageUrl": "https://images.unsplash.com/photo-1547514701-42782101795e"
+    },
+    {
+      "id": "p15",
+      "name": "Coca Cola 2L",
+      "category": "Drinks",
+      "priceCents": 275,
+      "stock": 14,
+      "imageUrl": "https://images.unsplash.com/photo-1581636625402-29b2a704ef13"
+    },
+    {
+      "id": "p16",
+      "name": "Agua Mineral 1.5L",
+      "category": "Drinks",
+      "priceCents": 70,
+      "stock": 100,
+      "imageUrl": "https://images.unsplash.com/photo-1564419320408-38e24e038c6c"
+    },
+    {
+      "id": "p17",
+      "name": "Patatas Fritas Bolsa",
+      "category": "Snacks",
+      "priceCents": 165,
+      "stock": 35,
+      "imageUrl": "https://images.unsplash.com/photo-1566478989037-eec170784d0b"
+    },
+    {
+      "id": "p18",
+      "name": "Galletas María",
+      "category": "Snacks",
+      "priceCents": 150,
+      "stock": 28,
+      "imageUrl": "https://images.unsplash.com/photo-1589987607627-1fef2d6d1e03"
+    },
+    {
+      "id": "p19",
+      "name": "Aceite de Oliva 1L",
+      "category": "Pantry",
+      "priceCents": 780,
+      "stock": 9,
+      "imageUrl": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5"
+    },
+    {
+      "id": "p20",
+      "name": "Cerveza Lager Pack",
+      "category": "Drinks",
+      "priceCents": 650,
+      "stock": 16,
+      "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591"
+    },
+    {
+      "id": "p21",
+      "name": "Batidos de proteina",
+      "category": "Drinks",
+      "priceCents": 100,
+      "stock": 160,
+      "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591"
+    },
+    {
+      "id": "p22",
+      "name": "Mantequilla 250g",
+      "category": "Dairy",
+      "priceCents": 235,
+      "stock": 18,
+      "imageUrl": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d"
+    },
+    {
+      "id": "p23",
+      "name": "Lechuga Romana",
+      "category": "Fruits",
+      "priceCents": 110,
+      "stock": 26,
+      "imageUrl": "https://images.unsplash.com/photo-1556801712-76c8eb07bbc9"
+    },
+    {
+      "id": "p24",
+      "name": "Tomates Cherry",
+      "category": "Fruits",
+      "priceCents": 195,
+      "stock": 21,
+      "imageUrl": "https://images.unsplash.com/photo-1561136594-7f68413baa99"
+    },
+    {
+      "id": "p25",
+      "name": "Carne Picada 500g",
+      "category": "Meat",
+      "priceCents": 560,
+      "stock": 7,
+      "imageUrl": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f"
+    },
+    {
+      "id": "p26",
+      "name": "Jamón Serrano",
+      "category": "Meat",
+      "priceCents": 720,
+      "stock": 11,
+      "imageUrl": "https://images.unsplash.com/photo-1604908554007-8c1b7e3d9f0a"
+    },
+    {
+      "id": "p27",
+      "name": "Pan de Molde",
+      "category": "Bakery",
+      "priceCents": 160,
+      "stock": 19,
+      "imageUrl": "https://images.unsplash.com/photo-1608198093002-ad4e005484ec"
+    },
+    {
+      "id": "p28",
+      "name": "Croissants Pack",
+      "category": "Bakery",
+      "priceCents": 290,
+      "stock": 13,
+      "imageUrl": "https://images.unsplash.com/photo-1555507036-ab1f4038808a"
+    },
+    {
+      "id": "p29",
+      "name": "Salmón Fresco 300g",
+      "category": "Meat",
+      "priceCents": 890,
+      "stock": 6,
+      "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c"
+    },
+    {
+      "id": "p30",
+      "name": "Pizza Margarita",
+      "category": "Frozen",
+      "priceCents": 420,
+      "stock": 24,
+      "imageUrl": "https://images.unsplash.com/photo-1548365328-9f547fb0953d"
+    },
+    {
+      "id": "p31",
+      "name": "Helado Vainilla 1L",
+      "category": "Frozen",
+      "priceCents": 350,
+      "stock": 17,
+      "imageUrl": "https://images.unsplash.com/photo-1563805042-7684c019e1cb"
+    },
+    {
+      "id": "p32",
+      "name": "Café Molido 250g",
+      "category": "Pantry",
+      "priceCents": 360,
+      "stock": 29,
+      "imageUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93"
+    },
+    {
+      "id": "p33",
+      "name": "Azúcar Blanca 1kg",
+      "category": "Pantry",
+      "priceCents": 145,
+      "stock": 48,
+      "imageUrl": "https://images.unsplash.com/photo-1587731556938-38755b4803a6"
+    },
+    {
+      "id": "p34",
+      "name": "Sal Fina",
+      "category": "Pantry",
+      "priceCents": 80,
+      "stock": 70,
+      "imageUrl": "https://images.unsplash.com/photo-1514516873439-d3a1e4d7f0a2"
+    },
+    {
+      "id": "p35",
+      "name": "Cerveza IPA",
+      "category": "Drinks",
+      "priceCents": 210,
+      "stock": 34,
+      "imageUrl": "https://images.unsplash.com/photo-1510626176961-4b37d3b1a6e4"
+    },
+    {
+      "id": "p36",
+      "name": "Zumo de Naranja 1L",
+      "category": "Drinks",
+      "priceCents": 240,
+      "stock": 27,
+      "imageUrl": "https://images.unsplash.com/photo-1542444459-db63c7d5a2d2"
+    },
+    {
+      "id": "p37",
+      "name": "Frutos Secos Mix",
+      "category": "Snacks",
+      "priceCents": 390,
+      "stock": 23,
+      "imageUrl": "https://images.unsplash.com/photo-1508747703725-719777637510"
+    },
+    {
+      "id": "p38",
+      "name": "Barritas Energéticas",
+      "category": "Snacks",
+      "priceCents": 260,
+      "stock": 45,
+      "imageUrl": "https://images.unsplash.com/photo-1604908176997-4318c6bb5c8d"
+    },
+    {
+      "id": "p39",
+      "name": "Detergente Ropa",
+      "category": "Cleaning",
+      "priceCents": 520,
+      "stock": 20,
+      "imageUrl": "https://images.unsplash.com/photo-1581578731548-c64695cc6952"
+    },
+    {
+      "id": "p40",
+      "name": "Papel Higiénico Pack",
+      "category": "Cleaning",
+      "priceCents": 450,
+      "stock": 32,
+      "imageUrl": "https://images.unsplash.com/photo-1583947582886-f40ec95dd752"
+    }
+  ]
+}

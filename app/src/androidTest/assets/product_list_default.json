@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "id": "p1",
+      "name": "Pan",
+      "priceCents": 1000,
+      "category": "Comida",
+      "stock": 5
+    },
+    {
+      "id": "p2",
+      "name": "Leche",
+      "priceCents": 2000,
+      "category": "Lácteos",
+      "stock": 3
+    },
+    {
+      "id": "p3",
+      "name": "Queso",
+      "priceCents": 1500,
+      "category": "Lácteos",
+      "stock": 8
+    }
+  ]
+}

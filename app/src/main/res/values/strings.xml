@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CursoTestingAndroid</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_filters_section">Filtros y visualización</string>
+    <string name="settings_in_stock_only">Solo productos en Stock</string>
+    <string name="settings_appearance_section">Apariencia</string>
+    <string name="settings_theme_label">Tema de la aplicación</string>
+</resources>
