@@ -100,8 +100,8 @@ class CheckoutViewModelIntegrationTest {
         cartRepository.addToCart(product.id, quantity)
         mockWebServer.server.enqueue(
             MockResponse().setResponseCode(200).setBody(
-                OrderConfirmationBuilder().buildJson()
-            )
+                OrderConfirmationBuilder().buildJson(),
+            ),
         )
         viewModel.onNameChange("test name")
         viewModel.onEmailChange("test@mail.cl")
@@ -133,7 +133,7 @@ class CheckoutViewModelIntegrationTest {
         val quantity = 2
         cartRepository.addToCart(product.id, quantity)
         mockWebServer.server.enqueue(
-            MockResponse().setResponseCode(500)
+            MockResponse().setResponseCode(500),
         )
         viewModel.onNameChange("test name")
         viewModel.onEmailChange("test@mail.cl")

@@ -19,7 +19,7 @@ class OrderConfirmationBuilder {
     fun build() = OrderConfirmationResponse(
         orderId = orderId,
         etaMinutes = etaMinutes,
-        total = total
+        total = total,
     )
 
     fun buildJson(): String {
