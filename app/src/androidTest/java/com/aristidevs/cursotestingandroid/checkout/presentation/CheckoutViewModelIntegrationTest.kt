@@ -16,6 +16,7 @@ import com.aristidevs.cursotestingandroid.productlist.domain.repository.Promotio
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -219,7 +220,7 @@ class CheckoutViewModelIntegrationTest {
         viewModel.onAddressChange("test address")
 
         val checkoutEvents = mutableListOf<CheckoutEvent>()
-        val collector = backgroundScope.launch {
+        val collector = backgroundScope.launch(start = CoroutineStart.UNDISPATCHED) {
             viewModel.event.toList(checkoutEvents)
         }
 
@@ -227,8 +228,8 @@ class CheckoutViewModelIntegrationTest {
         viewModel.onConfirm()
         viewModel.uiState.test(6.seconds) {
             awaitStateMatching { it is CheckoutUiState.Error }
+            cancelAndIgnoreRemainingEvents()
         }
-        advanceUntilIdle()
 
         // THEN
         assertTrue(checkoutEvents.isNotEmpty())
