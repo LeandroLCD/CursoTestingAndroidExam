@@ -15,7 +15,11 @@ import com.aristidevs.cursotestingandroid.productlist.domain.repository.ProductR
 import com.aristidevs.cursotestingandroid.productlist.domain.repository.PromotionRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -23,6 +27,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
@@ -161,6 +166,103 @@ class CheckoutViewModelIntegrationTest {
             assertTrue(state is CheckoutUiState.Error)
             assertNotNull(cartItems)
             assertTrue(cartItems.isNotEmpty())
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun givenInvalidForm_whenOnConfirm_thenCanSubmitIsFalse() = runTest {
+        // GIVEN
+        cartRepository.addToCart("p1", 2)
+        viewModel.onNameChange("test name")
+        viewModel.onEmailChange("not-an-email")
+
+        // WHEN
+        viewModel.uiState.test{
+            val idle = awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
+
+            // THEN
+            assertEquals(FieldError.REQUIRED, idle.errors.addressError)
+            assertEquals(FieldError.INVALID_EMAIL, idle.errors.emailError)
+            assertFalse(idle.canSubmit)
+            cancelAndIgnoreRemainingEvents()
+        }
+
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun givenInvalidForm_whenOnConfirm_thenCanSubmitIsFalseAndOrderEndpointNotCalled() = runTest {
+        // GIVEN
+        cartRepository.addToCart("p1", 2)
+        viewModel.onNameChange("test name")
+        viewModel.onEmailChange("not-an-email")
+        val requestsBeforeConfirm = mockWebServer.server.requestCount
+
+        // WHEN
+        viewModel.onConfirm()
+
+        // THEN
+        assertEquals(requestsBeforeConfirm, mockWebServer.server.requestCount)
+        val cartItems = cartRepository.getCartItems().firstOrNull()
+        assertNotNull(cartItems)
+        assertTrue(cartItems.isNotEmpty())
+    }
+
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun givenOrderEndpointFails_whenOnConfirm_thenEmitsShowMessageEvent() = runTest {
+        // GIVEN
+        cartRepository.addToCart("p1", 2)
+        mockWebServer.server.dispatcher = OrderErrorDispatcher()
+        viewModel.onNameChange("test name")
+        viewModel.onEmailChange("test@mail.cl")
+        viewModel.onAddressChange("test address")
+
+        val collectedEvents = mutableListOf<CheckoutEvent>()
+        val collector = backgroundScope.launch {
+            viewModel.event.toList(collectedEvents)
+        }
+
+        // WHEN
+        viewModel.onConfirm()
+        viewModel.uiState.test(6.seconds) {
+            awaitStateMatching { it is CheckoutUiState.Error }
+        }
+        advanceUntilIdle()
+
+        // THEN
+        assertTrue(collectedEvents.isNotEmpty())
+        assertTrue(collectedEvents.first() is CheckoutEvent.ShowMessage)
+        collector.cancel()
+    }
+
+    @Test
+    fun givenErrorState_whenOnRetry_thenReturnsToIdleAndCanResubmit() = runTest {
+        // GIVEN: llegamos a un Error state forzando el fallo del endpoint
+        cartRepository.addToCart("p1", 2)
+        mockWebServer.server.dispatcher = OrderErrorDispatcher()
+        viewModel.onNameChange("test name")
+        viewModel.onEmailChange("test@mail.cl")
+        viewModel.onAddressChange("test address")
+
+        viewModel.onConfirm()
+        viewModel.uiState.test(6.seconds) {
+            awaitStateMatching { it is CheckoutUiState.Error }
+        }
+
+        // WHEN
+        viewModel.onRetry()
+
+        // THEN
+        viewModel.uiState.test(3.seconds) {
+            val idle = awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
+            assertNotNull(idle)
+            assertFalse(idle.isSubmitting)
+            assertFalse(idle.isCartEmpty)
+            assertTrue(idle.canSubmit)
+            assertTrue(idle.errors.isValid)
         }
     }
 }
