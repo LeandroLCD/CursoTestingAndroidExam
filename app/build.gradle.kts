@@ -62,6 +62,7 @@ kover {
                     "*Activity*",
                     "*Screen*",
                     "*ComposableSingletons*",
+                    "*TestTagRes*",
                 )
             }
         }
