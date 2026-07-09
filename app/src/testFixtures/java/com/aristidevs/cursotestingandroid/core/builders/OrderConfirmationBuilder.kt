@@ -1,14 +1,11 @@
 package com.aristidevs.cursotestingandroid.core.builders
 
-import com.aristidevs.cursotestingandroid.checkout.data.remote.response.OrderConfirmationResponse
-import kotlinx.serialization.json.Json
+import com.aristidevs.cursotestingandroid.checkout.domain.model.OrderConfirmation
 
 class OrderConfirmationBuilder {
-    private var orderId: String = "test01"
-
-    private var etaMinutes: Int = 10
-
-    private var total: Double = 200.00
+    private var orderId: String = "order-1"
+    private var etaMinutes: Int = 30
+    private var total: Double = 100.0
 
     fun withOrderId(orderId: String) = apply { this.orderId = orderId }
 
@@ -16,15 +13,12 @@ class OrderConfirmationBuilder {
 
     fun withTotal(total: Double) = apply { this.total = total }
 
-    fun build() = OrderConfirmationResponse(
-        orderId = orderId,
-        etaMinutes = etaMinutes,
-        total = total,
-    )
-
-    fun buildJson(): String {
-        return Json.encodeToString(OrderConfirmationResponse.serializer(), build())
-    }
+    fun build() =
+        OrderConfirmation(
+            orderId = orderId,
+            etaMinutes = etaMinutes,
+            total = total,
+        )
 }
 
-fun orderConfirmationResponse(block: OrderConfirmationBuilder.() -> Unit = {}) = OrderConfirmationBuilder().apply(block).build()
+fun orderConfirmation(block: OrderConfirmationBuilder.() -> Unit = {}) = OrderConfirmationBuilder().apply(block).build()

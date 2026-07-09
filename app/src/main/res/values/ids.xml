@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="progress_checkout" type="id" />
+    <item name="button_confirm" type="id" />
+    <item name="email_field" type="id" />
+    <item name="button_retry" type="id" />
+</resources>

@@ -178,7 +178,7 @@ class CheckoutViewModelIntegrationTest {
         viewModel.onEmailChange("not-an-email")
 
         // WHEN
-        viewModel.uiState.test{
+        viewModel.uiState.test {
             val idle = awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
 
             // THEN
@@ -187,7 +187,6 @@ class CheckoutViewModelIntegrationTest {
             assertFalse(idle.canSubmit)
             cancelAndIgnoreRemainingEvents()
         }
-
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -209,7 +208,6 @@ class CheckoutViewModelIntegrationTest {
         assertTrue(cartItems.isNotEmpty())
     }
 
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun givenOrderEndpointFails_whenOnConfirm_thenEmitsShowMessageEvent() = runTest {
@@ -220,9 +218,9 @@ class CheckoutViewModelIntegrationTest {
         viewModel.onEmailChange("test@mail.cl")
         viewModel.onAddressChange("test address")
 
-        val collectedEvents = mutableListOf<CheckoutEvent>()
+        val checkoutEvents = mutableListOf<CheckoutEvent>()
         val collector = backgroundScope.launch {
-            viewModel.event.toList(collectedEvents)
+            viewModel.event.toList(checkoutEvents)
         }
 
         // WHEN
@@ -233,14 +231,14 @@ class CheckoutViewModelIntegrationTest {
         advanceUntilIdle()
 
         // THEN
-        assertTrue(collectedEvents.isNotEmpty())
-        assertTrue(collectedEvents.first() is CheckoutEvent.ShowMessage)
+        assertTrue(checkoutEvents.isNotEmpty())
+        assertTrue(checkoutEvents.first() is CheckoutEvent.ShowMessage)
         collector.cancel()
     }
 
     @Test
     fun givenErrorState_whenOnRetry_thenReturnsToIdleAndCanResubmit() = runTest {
-        // GIVEN: llegamos a un Error state forzando el fallo del endpoint
+        // GIVEN
         cartRepository.addToCart("p1", 2)
         mockWebServer.server.dispatcher = OrderErrorDispatcher()
         viewModel.onNameChange("test name")

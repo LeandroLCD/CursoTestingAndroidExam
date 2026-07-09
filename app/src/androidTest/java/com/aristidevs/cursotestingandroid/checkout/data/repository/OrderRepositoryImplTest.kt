@@ -2,7 +2,7 @@ package com.aristidevs.cursotestingandroid.checkout.data.repository
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.aristidevs.cursotestingandroid.checkout.domain.repository.OrderRepository
-import com.aristidevs.cursotestingandroid.core.builders.OrderConfirmationBuilder
+import com.aristidevs.cursotestingandroid.core.builders.OrderConfirmationResponseBuilder
 import com.aristidevs.cursotestingandroid.core.domain.model.AppError
 import com.aristidevs.cursotestingandroid.core.mockwebserver.rules.MockWebServerRule
 import com.aristidevs.cursotestingandroid.productlist.data.remote.RemoteDataSource
@@ -51,7 +51,7 @@ class OrderRepositoryImplTest {
         val id = "test01"
         mockWebServer.server.enqueue(
             MockResponse().setResponseCode(200).setBody(
-                OrderConfirmationBuilder().withOrderId(id).buildJson(),
+                OrderConfirmationResponseBuilder().withOrderId(id).buildJson(),
             ),
         )
 
@@ -81,7 +81,7 @@ class OrderRepositoryImplTest {
     }
 
     @Test
-    fun givenNetworkFailure_whenPlaceOrder_thenThrowsNetworkError() = runTest{
+    fun givenNetworkFailure_whenPlaceOrder_thenThrowsNetworkError() = runTest {
         // GIVEN
         mockWebServer.server.enqueue(
             MockResponse().setResponseCode(504),

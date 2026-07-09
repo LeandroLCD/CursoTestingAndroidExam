@@ -25,7 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.aristidevs.cursotestingandroid.R
 import com.aristidevs.cursotestingandroid.core.presentation.components.MarketTopAppBar
+import com.aristidevs.cursotestingandroid.utls.testTagRes
 
 @Composable
 fun CheckoutScreen(
@@ -77,7 +79,7 @@ fun CheckoutContent(
         ) {
             when (uiState) {
                 CheckoutUiState.Loading -> {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(modifier = Modifier.testTagRes(R.id.progress_checkout))
                 }
 
                 is CheckoutUiState.Error -> {
@@ -89,7 +91,7 @@ fun CheckoutContent(
                         verticalArrangement = Arrangement.Center,
                     ) {
                         Text(uiState.message)
-                        Button(onClick = { onRetry() }) {
+                        Button(onClick = { onRetry() }, modifier = Modifier.testTagRes(R.id.button_retry)) {
                             Text("Reintentar")
                         }
                     }
@@ -152,7 +154,7 @@ fun CheckoutContentIdle(
             onValueChange = onEmailChange,
             label = { Text("Email") },
             isError = uiState.errors.emailError != null,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTagRes(R.id.email_field),
         )
 
         if (uiState.isCartEmpty) {
@@ -162,7 +164,7 @@ fun CheckoutContentIdle(
         Button(
             onClick = onConfirm,
             enabled = uiState.canSubmit,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTagRes(R.id.button_confirm),
         ) { Text(if (uiState.isSubmitting) "Procesando el pago..." else "Confirmar pedido") }
     }
 }
