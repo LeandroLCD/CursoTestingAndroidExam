@@ -151,4 +151,5 @@ dependencies {
     testFixturesImplementation(libs.junit)
     testFixturesImplementation(libs.kotlinx.coroutines.test)
     testFixturesImplementation(libs.kotlinx.serialization.json)
+    testFixturesImplementation(libs.turbine)
 }
