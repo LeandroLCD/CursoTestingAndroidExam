@@ -6,6 +6,7 @@ import com.aristidevs.cursotestingandroid.checkout.data.repository.fake.FakeOrde
 import com.aristidevs.cursotestingandroid.checkout.domain.usecase.PlaceOrderUseCase
 import com.aristidevs.cursotestingandroid.core.MainDispatcherRule
 import com.aristidevs.cursotestingandroid.core.builders.cartItem
+import com.aristidevs.cursotestingandroid.core.builders.orderConfirmation
 import com.aristidevs.cursotestingandroid.core.builders.product
 import com.aristidevs.cursotestingandroid.core.fakes.FakeCartItemRepository
 import com.aristidevs.cursotestingandroid.core.fakes.FakeProductRepository
@@ -162,11 +163,20 @@ class CheckoutViewModelTest {
         viewModel.onNameChange("John Doe")
         viewModel.onAddressChange("123 Main St")
         viewModel.onEmailChange("test@correo.cl")
+        orderRepository.setOrderConfirmation(
+            orderConfirmation {
+                withOrderId("12345")
+            }
+        )
+
 
 
 
         // WHEN
         viewModel.uiState.test {
+            val idle = awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
+            assertTrue(idle.canSubmit)
+
             // THEN
             viewModel.onConfirm()
             val state =  awaitStateMatching { it is CheckoutUiState.Success } as CheckoutUiState.Success
