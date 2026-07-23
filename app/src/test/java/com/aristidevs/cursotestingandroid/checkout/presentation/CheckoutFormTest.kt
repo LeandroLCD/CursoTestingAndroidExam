@@ -84,7 +84,7 @@ class CheckoutFormTest {
     @Test
     fun `given all fields valid when validate then errors isValid is true`() {
         // GIVEN
-        val form = checkoutForm{
+        val form = checkoutForm {
             withName("John Doe")
             withAddress("123 Main St")
             withEmail("john@aristidev.cl")

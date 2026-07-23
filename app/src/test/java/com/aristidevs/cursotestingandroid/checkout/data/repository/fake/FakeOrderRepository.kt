@@ -3,7 +3,7 @@ package com.aristidevs.cursotestingandroid.checkout.data.repository.fake
 import com.aristidevs.cursotestingandroid.checkout.domain.model.OrderConfirmation
 import com.aristidevs.cursotestingandroid.checkout.domain.repository.OrderRepository
 
-class FakeOrderRepository:OrderRepository {
+class FakeOrderRepository : OrderRepository {
     private var orderConfirmation: OrderConfirmation? = null
 
     private var throwable: Throwable? = null

@@ -19,10 +19,10 @@ import org.junit.Test
  * Pista: necesitarás un fake de OrderRepository y FakeCartItemRepository.
  */
 class PlaceOrderUseCaseTest {
-
     lateinit var placeOrderUseCase: PlaceOrderUseCase
     private val orderRepository = FakeOrderRepository()
     private val cartItemRepository = FakeCartItemRepository()
+
     @Before
     fun setUp() {
         placeOrderUseCase = PlaceOrderUseCase(
@@ -32,7 +32,7 @@ class PlaceOrderUseCaseTest {
     }
 
     @Test
-    fun `given successful order when invoke then returns success and clears cart`() = runTest{
+    fun `given successful order when invoke then returns success and clears cart`() = runTest {
         // GIVEN
         val orderConfirmation = orderConfirmation { withOrderId("test-id-1") }
         orderRepository.setOrderConfirmation(orderConfirmation)
@@ -55,7 +55,7 @@ class PlaceOrderUseCaseTest {
     }
 
     @Test
-    fun `given repository throws when invoke then returns failure`() = runTest{
+    fun `given repository throws when invoke then returns failure`() = runTest {
         // GIVEN
         orderRepository.setThrowable(AppError.NetworkError)
 
@@ -67,7 +67,7 @@ class PlaceOrderUseCaseTest {
     }
 
     @Test
-    fun `given repository throws when invoke then does not clear cart`() = runTest{
+    fun `given repository throws when invoke then does not clear cart`() = runTest {
         // GIVEN
         val orderConfirmation = orderConfirmation { withOrderId("test-id-1") }
         val initialCartItems = listOf(

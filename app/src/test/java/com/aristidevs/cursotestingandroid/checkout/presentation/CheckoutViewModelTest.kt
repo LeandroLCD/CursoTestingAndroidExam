@@ -60,6 +60,7 @@ class CheckoutViewModelTest {
             ),
         )
     }
+
     @Before
     fun setUp() {
         createViewModel()
@@ -76,9 +77,7 @@ class CheckoutViewModelTest {
             val state = awaitItem() as CheckoutUiState.Idle
             assertFalse(state.canSubmit)
             cancelAndConsumeRemainingEvents()
-
         }
-
     }
 
     @Test
@@ -88,26 +87,36 @@ class CheckoutViewModelTest {
         val id2 = "product2"
 
         val cartItems = listOf(
-            cartItem { withProductId(id1); withQuantity(2) },
-            cartItem { withProductId(id2); withQuantity(1) }
+            cartItem {
+                withProductId(id1)
+                withQuantity(2)
+            },
+            cartItem {
+                withProductId(id2)
+                withQuantity(1)
+            },
         )
         cartItemRepository.setCartItems(cartItems)
         val products = listOf(
-            product { withId(id1); withPrice(10.0) },
-            product { withId(id2); withPrice(20.0) }
+            product {
+                withId(id1)
+                withPrice(10.0)
+            },
+            product {
+                withId(id2)
+                withPrice(20.0)
+            },
         )
         productRepository.setProducts(products)
         viewModel.onNameChange("John Doe")
         viewModel.onAddressChange("123 Main St")
         viewModel.onEmailChange("test@correo.cl")
 
-
-
         // WHEN
         viewModel.uiState.test {
             // THEN
-            val state =  awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
-            assertTrue("$state",state.canSubmit)
+            val state = awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
+            assertTrue("$state", state.canSubmit)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -119,27 +128,37 @@ class CheckoutViewModelTest {
         val id2 = "product2"
 
         val cartItems = listOf(
-            cartItem { withProductId(id1); withQuantity(2) },
-            cartItem { withProductId(id2); withQuantity(1) }
+            cartItem {
+                withProductId(id1)
+                withQuantity(2)
+            },
+            cartItem {
+                withProductId(id2)
+                withQuantity(1)
+            },
         )
         cartItemRepository.setCartItems(cartItems)
         val products = listOf(
-            product { withId(id1); withPrice(10.0) },
-            product { withId(id2); withPrice(20.0) }
+            product {
+                withId(id1)
+                withPrice(10.0)
+            },
+            product {
+                withId(id2)
+                withPrice(20.0)
+            },
         )
         productRepository.setProducts(products)
         viewModel.onNameChange("John Doe")
         viewModel.onAddressChange("123 Main St")
         viewModel.onEmailChange("test@correo")
 
-
-
         // WHEN
         viewModel.uiState.test {
             // THEN
-            val state =  awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
-            assertTrue("$state",state.errors.emailError == FieldError.INVALID_EMAIL)
-            assertFalse("$state",state.canSubmit)
+            val state = awaitStateMatching { it is CheckoutUiState.Idle } as CheckoutUiState.Idle
+            assertTrue("$state", state.errors.emailError == FieldError.INVALID_EMAIL)
+            assertFalse("$state", state.canSubmit)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -151,13 +170,25 @@ class CheckoutViewModelTest {
         val id2 = "product2"
 
         val cartItems = listOf(
-            cartItem { withProductId(id1); withQuantity(2) },
-            cartItem { withProductId(id2); withQuantity(1) }
+            cartItem {
+                withProductId(id1)
+                withQuantity(2)
+            },
+            cartItem {
+                withProductId(id2)
+                withQuantity(1)
+            },
         )
         cartItemRepository.setCartItems(cartItems)
         val products = listOf(
-            product { withId(id1); withPrice(10.0) },
-            product { withId(id2); withPrice(20.0) }
+            product {
+                withId(id1)
+                withPrice(10.0)
+            },
+            product {
+                withId(id2)
+                withPrice(20.0)
+            },
         )
         productRepository.setProducts(products)
         viewModel.onNameChange("John Doe")
@@ -166,11 +197,8 @@ class CheckoutViewModelTest {
         orderRepository.setOrderConfirmation(
             orderConfirmation {
                 withOrderId("12345")
-            }
+            },
         )
-
-
-
 
         // WHEN
         viewModel.uiState.test {
@@ -179,8 +207,8 @@ class CheckoutViewModelTest {
 
             // THEN
             viewModel.onConfirm()
-            val state =  awaitStateMatching { it is CheckoutUiState.Success } as CheckoutUiState.Success
-            assertTrue("$state",state.confirmation.orderId.isNotEmpty())
+            val state = awaitStateMatching { it is CheckoutUiState.Success } as CheckoutUiState.Success
+            assertTrue("$state", state.confirmation.orderId.isNotEmpty())
 
             cancelAndConsumeRemainingEvents()
         }
@@ -193,13 +221,25 @@ class CheckoutViewModelTest {
         val id2 = "product2"
 
         val cartItems = listOf(
-            cartItem { withProductId(id1); withQuantity(2) },
-            cartItem { withProductId(id2); withQuantity(1) }
+            cartItem {
+                withProductId(id1)
+                withQuantity(2)
+            },
+            cartItem {
+                withProductId(id2)
+                withQuantity(1)
+            },
         )
         cartItemRepository.setCartItems(cartItems)
         val products = listOf(
-            product { withId(id1); withPrice(10.0) },
-            product { withId(id2); withPrice(20.0) }
+            product {
+                withId(id1)
+                withPrice(10.0)
+            },
+            product {
+                withId(id2)
+                withPrice(20.0)
+            },
         )
         productRepository.setProducts(products)
         viewModel.onNameChange("John Doe")
@@ -233,19 +273,30 @@ class CheckoutViewModelTest {
         val id2 = "product2"
 
         val cartItems = listOf(
-            cartItem { withProductId(id1); withQuantity(2) },
-            cartItem { withProductId(id2); withQuantity(1) }
+            cartItem {
+                withProductId(id1)
+                withQuantity(2)
+            },
+            cartItem {
+                withProductId(id2)
+                withQuantity(1)
+            },
         )
         cartItemRepository.setCartItems(cartItems)
         val products = listOf(
-            product { withId(id1); withPrice(10.0) },
-            product { withId(id2); withPrice(20.0) }
+            product {
+                withId(id1)
+                withPrice(10.0)
+            },
+            product {
+                withId(id2)
+                withPrice(20.0)
+            },
         )
         productRepository.setProducts(products)
         viewModel.onNameChange("John Doe")
         viewModel.onAddressChange("123 Main St")
         viewModel.onEmailChange("test@correo")
-
 
         // WHEN
         viewModel.uiState.test {
@@ -260,5 +311,4 @@ class CheckoutViewModelTest {
             cancelAndConsumeRemainingEvents()
         }
     }
-
 }
